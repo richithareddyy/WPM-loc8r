@@ -1,77 +1,67 @@
 extends layout
+include _includes/sharedHTMLfunctions
 block content
-    .row.banner
+  .row.banner
+    .col-12
+      h1= pageHeader.title
+  .row
+    .col-12.col-lg-9
+      .row
+        .col-12.col-md-6
+          +outputRating(location.rating)
+          p.address
+            i.fas.fa-map-pin.me-2
+            = location.address
+          .card
+            .card-body
+              h2.card-title
+                i.far.fa-clock.me-2
+                | Opening hours
+              each time in location.openingTimes
+                p.card-text.opening-time
+                  span= time.days
+                  if time.closed
+                    span.text-muted closed
+                  else
+                    span #{time.opening} - #{time.closing}
+          .card
+            .card-body
+              h2.card-title
+                i.fas.fa-concierge-bell.me-2
+                | Facilities
+              each facility in location.facilities
+                span.badge.facility
+                  i.fas.fa-check.me-1
+                  = facility
+        .col-12.col-md-6.location-map
+          .card
+            .card-body
+              h2.card-title
+                i.far.fa-map.me-2
+                | Location map
+              - const { lat, lng } = location.coords;
+              - const bbox = [lng - 0.004, lat - 0.0015, lng + 0.004, lat + 0.0015].join('%2C');
+              iframe.map(loading='lazy', title=`Map showing ${location.name}`, src=`https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat}%2C${lng}`)
+      .row
         .col-12
-            h1 Starcups
-    .row
-        .col-12.col-lg-9
-            .row
-                .col-12.col-md-6
-                    p.rating
-                        i.fas.fa-star
-                        i.fas.fa-star
-                        i.fas.fa-star
-                        i.far.fa-star
-                        i.far.fa-star
-                    p 125 High Street, Reading, RG6 1PS
-                    .card.card-primary
-                        .card-block
-                            h2.card-title Opening hours
-                            p.card-text Monday - Friday : 7:00am - 7:00pm
-                            p.card-text Saturday : 8:00am - 5:00pm
-                            p.card-text Sunday : closed
-                    .card.card-primary
-                        .card-block
-                            h2.card-title Facilities
-                            span.badge.badge-warning
-                                i.fa.fa-check
-                                | &nbsp;Hot drinks
-                            | &nbsp;
-                            span.badge.badge-warning
-                                i.fa.fa-check
-                                | &nbsp;Food
-                            | &nbsp;
-                            span.badge.badge-warning
-                                i.fa.fa-check
-                                | &nbsp;Premium wifi
-                            | &nbsp;
-                .col-12.col-md-6.location-map
-                    .card.card-primary
-                        .card-block
-                            h2.card-title Location map
-                            img.img-fluid.rounded(src='http://maps.googleapis.com/maps/api/..............staticmap?center=51.455041,-0.9690884&zoom=17&size=400x350&sensor=false&markers=51.455041,-0.9690884&scale=2&key=<API Key>')
-            .row
-                .col-12
-                    .card.card-primary.review-card
-                        .card-block
-                            a.btn.btn-primary.float-end(href='/location/review/new') Add review
-                            h2.card-title Customer reviews
-                            .row.review
-                                .col-12.no-gutters.review-header
-                                    span.rating
-                                        i.fas.fa-star
-                                        i.fas.fa-star
-                                        i.fas.fa-star
-                                        i.far.fa-star
-                                        i.far.fa-star
-                                    span.reviewAuthor Simon Holmes
-                                    small.reviewTimestamp 16 February 2017
-                                .col-12
-                                    p What a great place.
-                            .row.review
-                                .col-12.no-gutters.review-header
-                                    span.rating
-                                        i.fas.fa-star
-                                        i.fas.fa-star
-                                        i.fas.fa-star
-                                        i.far.fa-star
-                                        i.far.fa-star
-                                    span.reviewAuthor Charlie Chaplin
-                                    small.reviewTimestamp 14 February 2017
-                                .col-12
-                                    p It was okay. Coffee wasn't great.
-        .col-12.col-lg-3
-            p.lead
-                | Starcups is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.
-            p
-                | If you've been and you like it - or if you don't - please leave a review to help other people just like you.
+          .card.review-card
+            .card-body
+              .d-flex.justify-content-between.align-items-center.mb-2
+                h2.card-title.mb-0
+                  i.far.fa-comments.me-2
+                  | Customer reviews
+                a.btn.btn-primary(href='/locations/review/new')
+                  i.fas.fa-pen.me-2
+                  | Add review
+              each review in location.reviews
+                .review
+                  .review-header
+                    +outputRating(review.rating)
+                    span.review-author= review.author
+                    small.review-timestamp
+                      +formatDate(review.timestamp)
+                  p.review-text= review.reviewText
+    .col-12.col-lg-3
+      aside.sidebar
+        p.lead #{location.name} #{sidebar.context}
+        p= sidebar.callToAction
