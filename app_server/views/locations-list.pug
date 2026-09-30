@@ -2,21 +2,25 @@ extends layout
 include _includes/sharedHTMLfunctions
 block content
   .row.banner
-  .col-12
-    h1= pageHeader.title 
-      small &nbsp;#{pageHeader.strapline}
+    .col-12
+      h1= pageHeader.title
+        small.strapline= pageHeader.strapline
   .row
     .col-12.col-md-8
-      each location in locations 
-        .card 
-          .card-block 
-            h4 
-              a(href="/location")= location.name
-              +outputRating(location.rating)
-              span.badge.badge-pill.badge-default.float-end= location.distance
-            p.address= location.address
+      each location in locations
+        a.card.location-card(href='/locations')
+          .card-body
+            .d-flex.justify-content-between.align-items-start
+              div
+                h2.location-name= location.name
+                +outputRating(location.rating)
+              span.badge.rounded-pill.distance= location.distance
+            p.address
+              i.fas.fa-map-pin.me-2
+              = location.address
             .facilities
               each facility in location.facilities
-                span.badge.badge-warning= facility 
+                span.badge.facility= facility
     .col-12.col-md-4
-      p.lead= sidebar 
+      aside.sidebar
+        p.lead= sidebar

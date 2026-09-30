@@ -1,5 +1,10 @@
 mixin outputRating(rating)
-  - for (let i = 1; i <= rating; i++)
-    i.fas.fa-star
-  - for (let i = rating; i < 5; i++)
-    i.far.fa-star
+  span.rating(title=`${rating} out of 5 stars`, aria-label=`${rating} out of 5 stars`)
+    - for (let i = 1; i <= rating; i++)
+      i.fas.fa-star
+    - for (let i = rating; i < 5; i++)
+      i.far.fa-star
+
+mixin formatDate(dateString)
+  - const date = new Date(dateString);
+  time(datetime=date.toISOString())= date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })

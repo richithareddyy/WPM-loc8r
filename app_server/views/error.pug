@@ -1,6 +1,13 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  .row.banner
+    .col-12
+      h1= message
+      if error.status
+        p.lead Error #{error.status}
+  .row
+    .col-12
+      a.btn.btn-primary(href='/') Back to home
+      if error.stack
+        pre.error-stack.mt-4 #{error.stack}
