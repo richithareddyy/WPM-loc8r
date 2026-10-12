@@ -22,7 +22,7 @@ npm ci
 npm start
 ```
 
-The start script launches the server through `bin/www`.
+Open http://localhost:3000. `PORT` overrides the default. The start script launches the server through `bin/www`.
 
 ## Project structure
 
@@ -35,6 +35,10 @@ The start script launches the server through `bin/www`.
 | `app_server/views/` | Pug templates |
 | `public/stylesheets/` | Site styles |
 
+The separation between routes, controllers, and Pug templates is the main coursework exercise: controllers supply sample data and templates render the pages. No client-side framework or database is needed to try it.
+
 ## Scope
 
 This is a coursework demonstration with sample data defined in the controllers. The displayed distances and reviews are examples, not live location data. The review form demonstrates the interface; this repository does not include a persistent review database.
+
+There is no automated test script. To check the page flow manually, visit `/`, `/locations`, `/locations/review/new`, and `/about`. The review route is GET-only, so submitting the form does not save a review.
