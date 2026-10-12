@@ -1,4 +1,3 @@
-/* GET home page */
 const homelist = (req, res) => {
     res.render('locations-list', {
         title: 'Loc8r - find a place to work with wifi',
@@ -29,7 +28,6 @@ const homelist = (req, res) => {
     });
 };
 
-/* GET Location Info page */
 const locationInfo = (req, res) => {
     res.render('location-info', {
         title: 'Starcups',
@@ -62,18 +60,17 @@ const locationInfo = (req, res) => {
                 author: 'Simon Holmes',
                 rating: 5,
                 timestamp: new Date('2017-02-16'),
-                reviewText: 'What a great place. I can\'t say enough good things about it.'
+                reviewText: "What a great place. I can't say enough good things about it."
             }, {
                 author: 'Charlie Chaplin',
                 rating: 3,
                 timestamp: new Date('2017-02-14'),
-                reviewText: 'It was okay. Coffee wasn\'t great, but the wifi was fast.'
+                reviewText: "It was okay. Coffee wasn't great, but the wifi was fast."
             }]
         }
     });
 };
 
-/* GET Add review page */
 const addReview = (req, res) => {
     res.render('location-review-form', {
         title: 'Review Starcups on Loc8r',
